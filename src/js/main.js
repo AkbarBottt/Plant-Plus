@@ -61,7 +61,7 @@ document.addEventListener('click', async (e) => {
   resultDiv.innerHTML = '⏳ Mengirim ke server...';
 
   try {
-    const res = await fetch('/api/predict', {
+    const res = await fetch('/api/app', {
       method: 'POST',
       body: formData,
     });

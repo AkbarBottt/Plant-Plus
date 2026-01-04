@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
     formData.append('image', file);
 
     try {
-      const response = await fetch('/api/predict', {
+      const response = await fetch('/api/app', {
         method: 'POST',
         body: formData,
       });

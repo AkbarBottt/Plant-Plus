@@ -26,7 +26,7 @@ def allowed_file(filename):
 # ===============================
 # Route API
 # ===============================
-@app.route("/api/predict", methods=["POST"])
+@app.route("/api/app", methods=["POST"])
 def predict():
     if "image" not in request.files:
         return jsonify({"error": "Tidak ada file yang dikirim"}), 400
