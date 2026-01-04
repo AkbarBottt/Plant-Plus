@@ -1,14 +1,9 @@
-# =========================================================
-# PREDIKSI GAMBAR DAUN MANGGA
-# Tahap 10 – Memuat model dan memprediksi input
-# =========================================================
-
-import numpy as np
-import matplotlib.pyplot as plt
-from tensorflow.keras.models import load_model, Sequential
+import os
+from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Dropout, BatchNormalization
-from tensorflow.keras.preprocessing import image
 from tensorflow.keras.applications.efficientnet import EfficientNetB7, preprocess_input
+from tensorflow.keras.preprocessing import image
+import numpy as np
 
 # =========================================================
 # Inisialisasi Model (harus sama seperti saat training)
@@ -32,19 +27,17 @@ model = Sequential([
     Dense(len(classes), activation='softmax')
 ])
 
-# Memuat weights
-model.load_weights("my_model_weights-v1-final.h5")
+# =========================================================
+# Load weights dari folder data/
+# =========================================================
+here = os.path.dirname(os.path.abspath(__file__))
+weights_path = os.path.join(here, '..', 'data', 'my_model_weights-v1-final.h5')
+model.load_weights(weights_path)
 
 # =========================================================
 # Fungsi prediksi
 # =========================================================
 def predict_and_return(image_path):
-    from tensorflow.keras.preprocessing import image
-    import numpy as np
-
-    classes = ['Anthracnose','Bacterial Canker','Cutting Weevil','Die Back',
-               'Gall Midge','Healthy','Powdery Mildew','Sooty Mould']
-
     img = image.load_img(image_path, target_size=(224, 224))
     img_array = image.img_to_array(img)
     img_array = np.expand_dims(img_array, axis=0)

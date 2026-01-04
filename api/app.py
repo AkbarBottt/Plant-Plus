@@ -1,5 +1,3 @@
-# api/app.py
-
 from flask import Flask, request, jsonify
 from werkzeug.utils import secure_filename
 from flask_cors import CORS
@@ -44,5 +42,3 @@ def predict():
 
     except Exception as e:
         return jsonify({"status":"error","message":str(e)}), 500
-
-# jangan panggil app.run(), Vercel akan handle ini
