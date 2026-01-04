@@ -61,7 +61,7 @@ document.addEventListener('click', async (e) => {
   resultDiv.innerHTML = '⏳ Mengirim ke server...';
 
   try {
-    const res = await fetch('http://127.0.0.1:5000/predict', {
+    const res = await fetch('/api/predict', {
       method: 'POST',
       body: formData,
     });
