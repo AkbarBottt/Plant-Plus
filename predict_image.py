@@ -1,4 +1,5 @@
 import os
+import requests
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Dropout, BatchNormalization
 from tensorflow.keras.applications.efficientnet import EfficientNetB7, preprocess_input
@@ -28,14 +29,30 @@ model = Sequential([
 ])
 
 # =========================================================
-# Load weights dari folder data/
+# Load weights dari Google Drive (folder data/)
 # =========================================================
 here = os.path.dirname(os.path.abspath(__file__))
-weights_path = os.path.join(here, '..', 'data', 'my_model_weights-v1-final.h5')
+weights_dir = os.path.join(here, '..', 'data')
+weights_path = os.path.join(weights_dir, 'my_model_weights-v1-final.h5')
+
+# Google Drive file ID
+GOOGLE_DRIVE_FILE_ID = "1sgbzwTybxopLbeFCM_Qm02TiUwOvaKyb"  # ganti dengan ID file model di Drive
+DRIVE_URL = f"https://drive.google.com/uc?export=download&id={GOOGLE_DRIVE_FILE_ID}"
+
+# Download model jika belum ada
+if not os.path.exists(weights_path):
+    os.makedirs(weights_dir, exist_ok=True)
+    print("Downloading model from Google Drive...")
+    r = requests.get(DRIVE_URL, allow_redirects=True)
+    with open(weights_path, 'wb') as f:
+        f.write(r.content)
+    print("Model downloaded successfully!")
+
+# Load weights
 model.load_weights(weights_path)
 
 # =========================================================
-# Fungsi prediksi
+# Fungsi prediksi (tetap sama)
 # =========================================================
 def predict_and_return(image_path):
     img = image.load_img(image_path, target_size=(224, 224))
